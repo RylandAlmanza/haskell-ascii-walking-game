@@ -87,14 +87,13 @@ handleDir world@(World hero width height tiles) input = gameLoop World
 
 -- update the game loop to add in the goodbye message
 gameLoop :: World -> IO ()
-gameLoop world@(World hero _ height tiles) = do
+gameLoop world@(World hero@(Entity _ (ox, oy) _ _) _ h tm) = do
     drawEntity hero
-    let (oldX, oldY) = lastPos hero in drawEntity $ tiles!!(oldX * (height + 1) + oldY)
+    drawEntity $ tm!!(ox * (h + 1) + oy)
     input <- getInput
     case input of
         Exit -> handleExit
         _    -> handleDir world input
-    where (oldX, oldY) = pos hero
 
 -- when the user wants to exit we give them a thank you
 -- message and then reshow the cursor

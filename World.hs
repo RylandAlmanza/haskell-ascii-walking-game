@@ -20,7 +20,7 @@ data World = World
 
 moveBy :: Entity -> Coord -> Entity
 moveBy entity@(Entity (x, y) _ _ _) (dx, dy) = Entity
-    { pos = (x + dx, x + dy)
+    { pos = (x + dx, y + dy)
     , lastPos = (x, y)
     , sprite = sprite entity
     , solid = solid entity
@@ -29,7 +29,7 @@ moveBy entity@(Entity (x, y) _ _ _) (dx, dy) = Entity
 reverseIfCollides :: Entity -> World -> Entity
 reverseIfCollides entity@(Entity (x, y) lp _ _) world@(World _ w h tm) = Entity
     { pos = if collides then lp else (x, y)
-    , lastPos = lp
+    , lastPos = if collides then (x, y) else lp
     , sprite = sprite entity
     , solid = solid entity
     }
