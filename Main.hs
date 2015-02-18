@@ -42,17 +42,27 @@ main = do
 
 drawEntity :: Entity -> IO ()
 drawEntity entity = do
+<<<<<<< HEAD
     setCursorPosition entityY entityX
     setSGR [ SetConsoleIntensity BoldIntensity
            , SetColor Foreground Vivid entityColor ]
     putStr [entityChar]
     where (entityX, entityY) = pos entity
           (entityChar, entityColor) = sprite entity
+=======
+  setCursorPosition entityY entityX
+  setSGR [ SetConsoleIntensity BoldIntensity
+         , SetColor Foreground Vivid entityColor ]
+  putStr [entityChar]
+  where (entityX, entityY) = pos entity
+        (entityChar, entityColor) = sprite entity
+>>>>>>> 758ce2907c1174d2f5bfb363903aacb511dda66e
 
 -- receive a character and return our Input data structure,
 -- recursing on invalid input
 getInput :: IO Input
 getInput = do
+<<<<<<< HEAD
     char <- getChar
     case char of
       'q' -> return Exit
@@ -72,6 +82,27 @@ dirToCoord d
     | d == Left  = (-1, 0)
     | d == Right = (1,  0)
     | otherwise  = (0,  0)
+=======
+  char <- getChar
+  case char of
+    'q' -> return Exit
+    'w' -> return Up
+    'k' -> return Up
+    's' -> return Down
+    'j' -> return Down
+    'a' -> return Left
+    'h' -> return Left
+    'd' -> return Right
+    'l' -> return Right
+    _ -> getInput
+
+dirToCoord d
+  | d == Up    = (0, -1)
+  | d == Down  = (0,  1)
+  | d == Left  = (-1, 0)
+  | d == Right = (1,  0)
+  | otherwise  = (0,  0)
+>>>>>>> 758ce2907c1174d2f5bfb363903aacb511dda66e
 
 -- add the supplied direction to the hero's position, and set that
 -- to be the hero's new position, making sure to limit the hero's
@@ -88,6 +119,7 @@ handleDir world@(World hero width height tiles) input = gameLoop World
 -- update the game loop to add in the goodbye message
 gameLoop :: World -> IO ()
 gameLoop world@(World hero _ height tiles) = do
+<<<<<<< HEAD
     drawEntity hero
     let (oldX, oldY) = lastPos hero in drawEntity $ tiles!!(oldX * (height + 1) + oldY)
     input <- getInput
@@ -95,11 +127,27 @@ gameLoop world@(World hero _ height tiles) = do
         Exit -> handleExit
         _    -> handleDir world input
     where (oldX, oldY) = pos hero
+=======
+  drawEntity hero
+  let (oldX, oldY) = lastPos hero in drawEntity $ tiles!!(oldX * (height + 1) + oldY)
+  input <- getInput
+  case input of
+    Exit -> handleExit
+    _    -> handleDir world input
+  where (oldX, oldY) = pos hero
+>>>>>>> 758ce2907c1174d2f5bfb363903aacb511dda66e
 
 -- when the user wants to exit we give them a thank you
 -- message and then reshow the cursor
 handleExit = do
+<<<<<<< HEAD
     clearScreen
     setCursorPosition 0 0
     showCursor
     putStrLn "Thank you for playing!"
+=======
+  clearScreen
+  setCursorPosition 0 0
+  showCursor
+  putStrLn "Thank you for playing!"
+>>>>>>> 758ce2907c1174d2f5bfb363903aacb511dda66e
